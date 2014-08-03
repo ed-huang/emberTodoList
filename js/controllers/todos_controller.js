@@ -55,13 +55,16 @@ Todos.TodoController = Ember.ObjectController.extend({
 	actions: {
 		editTodo: function() {
 			this.set('isEditing', true);
+			console.log("state: ", this.get('currentState.stateName'));
 		},
 
 		acceptChanges: function() {
 			this.set('isEditing', false);
 			console.log("accept changes");
+			console.log("state: ", this.get('currentState.stateName'));
 
 			if (Ember.isEmpty(this.get('model.title'))) {
+				console.log("Empty state: ", this.get('currentState.stateName'));
 				this.send('removeTodo');
 			} else {
 				this.get('model').save();
@@ -70,6 +73,7 @@ Todos.TodoController = Ember.ObjectController.extend({
 		},
 
 		removeTodo: function() {
+			console.log("removeTodo state: ", this.get('currentState.stateName'));
 			var record = this.get('model');
 			record.deleteRecord();
 			record.save();
